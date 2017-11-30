@@ -40,7 +40,8 @@ Trigeri koji bi bili prisutni:
 - svako dodavanje ili izmena filtera, emotikona se mora logovati
 - itd.
 
-
+<br>
+## Opis entiteta i veza
 ### Korisnik:
 - Korisnika odlikuje jedinstveni identifikator (``uid``) i ``prilagodjeno_ime``.
 - Korisnik koji se nalazi u bazi mora imati nalog na Discord platformi jer se jedinstveni identifikator tog naloga koristi u bazi kao ``uid`` (user id).
