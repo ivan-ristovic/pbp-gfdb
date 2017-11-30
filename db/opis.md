@@ -79,12 +79,12 @@ Trigeri koji bi bili prisutni:
 - Više različitih servera može imati emotikone sa istim imenom.
 
 ### Konfiguracija servera
-- Svaki server može da ima svoju specifičnu konfiguraciju.
+- Svaki server ima svoju specifičnu konfiguraciju
 - Jednu konfiguraciju karakteriše:  ``welcome_kanal``, ``leave_kanal``, ``antispam_aktivan``, ``antiflood_aktivan``
-- ``welcome_kanal`` i ``leave_kanal`` su kanali u koje bot šalje welcome/leave poruke
+- ``welcome_kanal`` i ``leave_kanal`` su kanali u koje bot šalje welcome/leave poruke. Ukoliko nisu postavljeni, bot ne šalje poruke prilikom ulaska (izlaska) članova u (iz) servera
 - ``antispam_aktivan`` je boolean vrednost koja odredjuje da li je antispam aktivan (ukoliko korisnik šalje dosta poruka u kratkom vremenskom intervalu, biće utišan)
 - ``antiflood_aktivan`` je boolean vrednost koja odredjuje da li je antiflood aktivan (ukoliko gomila korisnika upadne na server u kratkom intervalu, to će se smatrati DDoS napadom i ti korisnici će biti banovani)
-- Server može imati najviše jednu konfiguraciju
+- Server ima tačno jednu konfiguraciju
 
 ### Zadatak
 - Korisnici mogu definisati zadatke koji se izvršavaju u definisano vreme.
@@ -94,7 +94,7 @@ Trigeri koji bi bili prisutni:
 ### Ban
 - Server može banovati korisnike (zabraniti im pristup odredjenom serveru)
 - Svaki ban odlikuje ``server_gid``, ``banovani_uid``, ``autor_uid``, ``vreme``, ``razlog``
-- ``server_gid`` predstavlja identifikator servera
+- ``guild_gid`` predstavlja identifikator servera
 - ``banovani_uid`` predstavlja identifikator banovanog korisnika
 - ``autor_uid`` predstavlja identifikator korisnika koji je izvršio akciju
 - ``vreme`` predstavlja vreme uklanjanja bana
