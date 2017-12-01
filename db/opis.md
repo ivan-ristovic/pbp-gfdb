@@ -64,7 +64,9 @@ Trigeri koji bi bili prisutni:
 - Korisnik može a i ne mora biti član više servera.
 - U jednom serveru mora postojati barem jedan ili više korisnika (barem vlasnik servera).
 - Korisnik koji je član servera ne mora biti istovremeno i član svih kanala tog servera (može mu se ograničiti pristup odredjenim kanalima). Dakle, jedan član servera može biti član jednog ili više kanala, ali sa druge strane ako je član kanala onda je istovremeno i član servera. Ukoliko korisnik napusti server, onda istovremeno napušta i sve kanale tog servera.
-- U bazi se skladišti i ``vreme_ulaska`` (predstavlja vreme ulaska korisnika u server), kao i ``prilagodjene_permisije`` za članove servera i pojedinačnih kanala (niska bitova koja odredjuje specifične permisije). Potrebno je zasebno čuvati permisije za server od permisija za specifičan kanal (korisnik može imati različite permisije u različitim kanalima jednog istog servera).
+- Svaki član servera ima dodatne atribute: ``vreme_ulaska`` (predstavlja vreme ulaska korisnika u server), kao i ``prilagodjene_permisije`` (niska bitova koja odredjuje specifične permisije).
+- Svaki član servera ima dodatni atribut ``prilagodjene_permisije`` (niska bitova koja odredjuje specifične permisije za svaki kanal servera).
+- Ukoliko korisnik napusti server/kanal, briše se informacija o njegovom članstvu servera/kanala.
 
 ### Filter
 - Server može definisati filtere za poruke koje korisnici šalju.
