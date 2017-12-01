@@ -61,47 +61,48 @@ Trigeri koji bi bili prisutni:
 
 ### Veze izmedju korisnika, servera i kanala:
 - Svaki server mora imati barem jedan kanal, ali ih obično ima više. Sa druge strane, kanal ima tačno jedan roditeljski server. Ukoliko se server obriše iz baze, brišu se i sva "deca" kanali.
-- Korisnik može biti član jednog ili više servera. U jednom serveru mora biti barem jedan ili više korisnika.
-- Korisnik koji je član servera ne mora biti istovremeno i član svih kanala (može mu se ograničiti pristup odredjenim kanalima). Dakle, jedan član servera može biti član jednog ili više kanala, ali sa druge strane ako je član kanala onda je istovremeno i član servera. Ukoliko korisnik napusti server, onda istovremeno napušta i sve kanale tog servera.
+- Korisnik može a i ne mora biti član više servera.
+- U jednom serveru mora postojati barem jedan ili više korisnika (barem vlasnik servera).
+- Korisnik koji je član servera ne mora biti istovremeno i član svih kanala tog servera (može mu se ograničiti pristup odredjenim kanalima). Dakle, jedan član servera može biti član jednog ili više kanala, ali sa druge strane ako je član kanala onda je istovremeno i član servera. Ukoliko korisnik napusti server, onda istovremeno napušta i sve kanale tog servera.
+- U bazi se skladišti i ``vreme_ulaska`` (predstavlja vreme ulaska korisnika u server), kao i ``prilagodjene_permisije`` za članove servera i pojedinačnih kanala (niska bitova koja odredjuje specifične permisije). Potrebno je zasebno čuvati permisije za server od permisija za specifičan kanal (korisnik može imati različite permisije u različitim kanalima jednog istog servera).
 
 ### Filter
 - Server može definisati filtere za poruke koje korisnici šalju.
 - Filter odredjuje ``filter_regex``.
-- ``filter_regex`` je regularni izraz koji se pokušava upariti sa svakom porukom poslatom u kanalima servera. Svaka poruka koja ima poklapanja sa nekim filterom se briše.
+- ``filter_regex`` je regularni izraz koji se pokušava upariti sa svakom porukom poslatom u kanalima servera. Svaka poruka koja ima poklapanja sa nekim filterom (za taj server) se briše.
 - Jedan server može imati više filtera, ali ih ne mora imati. Sa druge strane, filter se primenjuje na tačno jedan server.
-- Ukoliko se server obriše iz baze, brišu se i svi postavljeni filteri.
+- Ukoliko se server obriše iz baze, brišu se i svi postavljeni filteri za taj server.
 
 ### Emotikon (Emoji)
 - Server može definisati emotikone specifične za taj server (mogu se koristiti samo u kanalima tog servera).
-- Jedan emotikon odlikuje ``ime`` (jedinstveno za server), ``unicode_reprezentacija``, ``datum_kreiranja`` i ``autor_uid`` (uid autora emotikona).
+- Jedan emotikon odlikuje ``ime`` (jedinstveno za server), ``unicode_reprezentacija``, ``datum_kreiranja`` i ``autor_uid`` (uid autora emotikona). Bot zamenjuje svako pojavljivanje niske ``:ime:`` (Discord emotikonima daje imena ogradjena dvotačkama) sa unikod reprezentacijom postavljenom za to ime (npr za ime *smile* i unikod reprezentaciju: "😊", svako pojavljivanje niske *:smile:* u porukama se menja sa "😊").
 - Server može imati od 0 do više emotikona ali jedan emotikon može da pripada tačno jednom serveru.
 - Jedan član servera može napraviti više emotikona ali ne mora napraviti nijedan. Svaki emotikon ima tačno jednog autora. Ukoliko autor emotikona napusti server, polje autora se postavlja na nedefinisanu vrednost.
 - Više različitih servera može imati emotikone sa istim imenom.
 
 ### Konfiguracija servera
-- Svaki server ima svoju specifičnu konfiguraciju
-- Jednu konfiguraciju karakteriše:  ``welcome_kanal``, ``leave_kanal``, ``antispam_aktivan``, ``antiflood_aktivan``
-- ``welcome_kanal`` i ``leave_kanal`` su kanali u koje bot šalje welcome/leave poruke. Ukoliko nisu postavljeni, bot ne šalje poruke prilikom ulaska (izlaska) članova u (iz) servera
-- ``antispam_aktivan`` je boolean vrednost koja odredjuje da li je antispam aktivan (ukoliko korisnik šalje dosta poruka u kratkom vremenskom intervalu, biće utišan)
-- ``antiflood_aktivan`` je boolean vrednost koja odredjuje da li je antiflood aktivan (ukoliko gomila korisnika upadne na server u kratkom intervalu, to će se smatrati DDoS napadom i ti korisnici će biti banovani)
-- Server ima tačno jednu konfiguraciju
+- Svaki server mora imati tačno jednu specifičnu konfiguraciju.
+- Jednu konfiguraciju karakteriše:  ``welcome_kanal``, ``leave_kanal``, ``antispam_aktivan``, ``antiflood_aktivan``.
+- ``welcome_kanal`` i ``leave_kanal`` su kanali u koje bot šalje welcome/leave poruke. Ukoliko nisu postavljeni, bot ne šalje poruke prilikom ulaska (izlaska) članova u (iz) servera.
+- ``antispam_aktivan`` je boolean vrednost koja odredjuje da li je antispam aktivan (ukoliko korisnik šalje dosta poruka u kratkom vremenskom intervalu, biće utišan).
+- ``antiflood_aktivan`` je boolean vrednost koja odredjuje da li je antiflood aktivan (ukoliko gomila korisnika upadne na server u kratkom intervalu, to će se smatrati DDoS napadom i ti korisnici će biti banovani).
 
 ### Zadatak
 - Korisnici mogu definisati zadatke koji se izvršavaju u definisano vreme.
-- Jedan zadatak karakteriše ``sadrzaj``, ``vreme_izvrsavanja``
+- Jedan zadatak karakteriše ``sadrzaj`` i ``vreme_izvrsavanja``.
 - Kada prodje vreme_izvrsavanja zadatka, on se briše iz baze.
 
 ### Ban
-- Server može banovati korisnike (zabraniti im pristup odredjenom serveru)
-- Svaki ban odlikuje ``server_gid``, ``banovani_uid``, ``autor_uid``, ``vreme``, ``razlog``
-- ``guild_gid`` predstavlja identifikator servera
-- ``banovani_uid`` predstavlja identifikator banovanog korisnika
-- ``autor_uid`` predstavlja identifikator korisnika koji je izvršio akciju
-- ``vreme`` predstavlja vreme uklanjanja bana
-- ``razlog`` opcioni razlog bana
+- Korisnici mogu banovati druge korisnike (zabraniti im pristup odredjenom serveru).
+- Svaki ban odlikuje ``guild_gid``, ``banovani_uid``, ``autor_uid``, ``vreme`` i ``razlog``.
+- ``guild_gid`` predstavlja identifikator servera.
+- ``banovani_uid`` predstavlja identifikator banovanog korisnika.
+- ``autor_uid`` predstavlja identifikator korisnika koji je izvršio akciju.
+- ``vreme`` predstavlja vreme uklanjanja bana. Ukoliko nije postavljeno, ban se nikada ne uklanja.
+- ``razlog`` opcioni razlog bana.
 
 ### Log
-- Aplikacija ima log u koji se upisuju sve izvršene akcije
-- Jedan entry u log fajlu karakteriše ``uid_izvrsioca``, ``komanda``, ``vreme_izvrsavanja``, ``komentar``
+- Aplikacija ima log u koji se upisuju sve izvršene akcije.
+- Jedan entry u log fajlu karakteriše ``uid_izvrsioca``, ``komanda``, ``vreme_izvrsavanja``, ``komentar``.
 - ``uid_izvrsioca`` je identifikator (uid) korisnika koji je izvršio neku komandu (``komanda``).
-- ``vreme_izvrsavanja`` i ``komentar`` predstavljaju vreme izvršavanja komande i opcioni komentar koji je korisnik ostavio
+- ``vreme_izvrsavanja`` i ``komentar`` predstavljaju vreme izvršavanja komande i opcioni komentar koji je korisnik ostavio.
