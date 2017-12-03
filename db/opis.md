@@ -41,6 +41,7 @@ Trigeri koji bi bili prisutni:
 - itd.
 
 <br>
+
 ## Opis entiteta i veza
 ### Korisnik:
 - Korisnika odlikuje jedinstveni identifikator (``uid``) i ``prilagodjeno_ime``.
@@ -77,7 +78,7 @@ Trigeri koji bi bili prisutni:
 
 ### Emotikon (Emoji)
 - Server može definisati emotikone specifične za taj server (mogu se koristiti samo u kanalima tog servera).
-- Jedan emotikon odlikuje ``ime`` (jedinstveno za server), ``unicode_reprezentacija``, ``datum_kreiranja`` i ``autor_uid`` (uid autora emotikona). Bot zamenjuje svako pojavljivanje niske ``:ime:`` (Discord emotikonima daje imena ogradjena dvotačkama) sa unikod reprezentacijom postavljenom za to ime (npr za ime *smile* i unikod reprezentaciju: "😊", svako pojavljivanje niske *:smile:* u porukama se menja sa "😊").
+- Jedan emotikon odlikuje ``ime`` (jedinstveno za server), ``unicode_reprezentacija``, ``datum_kreiranja`` i ``autor_uid`` (uid autora emotikona). Bot zamenjuje svako pojavljivanje niske ``:ime:`` (Discord emotikonima daje imena ogradjena dvotačkama) sa unikod reprezentacijom postavljenom za to ime (npr za ime ```smile``` i unikod reprezentaciju: ```😊```, svako pojavljivanje niske ```:smile:``` se u porukama menja sa ```😊```).
 - Server može imati od 0 do više emotikona ali jedan emotikon može da pripada tačno jednom serveru.
 - Jedan član servera može napraviti više emotikona ali ne mora napraviti nijedan. Svaki emotikon ima tačno jednog autora. Ukoliko autor emotikona napusti server, polje autora se postavlja na nedefinisanu vrednost.
 - Više različitih servera može imati emotikone sa istim imenom.
