@@ -5,7 +5,7 @@ Baza podataka za Discord bot aplikaciju.
 
 ## Opis domena
 
-[Discord](https://discordapp.com) je online komunikaciona platforma. Pordržava tekstualni (text) i glasovni (voice) chat. Korisnici Discord servisa mogu napraviti svoje servere (guilds) koji mogu sadržati više glasovnih ili tekstualnih kanala (channels). Jedan korisnik u isto vreme može biti član više servera. Serveri nemaju limit kad je u pitanju broj članova.
+[Discord](https://discordapp.com) je online komunikaciona platforma. Pordržava tekstualni (text) i glasovni (voice) chat. Korisnici Discord servisa mogu napraviti svoje servere (guilds) koji mogu sadržati više glasovnih ili tekstualnih kanala (channels). Server se može sastojati i od kategorija u kojima se nalaze različiti kanali (na primer, kanal-kategorija ``programiranje`` i u njoj kanali ``C``, ``C++`` itd). Jedan korisnik u isto vreme može biti član više servera. Serveri nemaju limit kad je u pitanju broj članova.
 
 Developeri mogu kreirati sopstvene aplikacije (botove) koje će se povezivati na servere, ponašati se kao obični korisnici i izvršavati neki posao. Moja aplikacija funkcioniše tako što joj korisnici zadaju komande u tekstualnim kanalima. Svaka poruka koja počinje prefiksom ``!`` (podrazumevajuće, može da bude specifično za server) se smatra komandom. Aplikacija parsira komandu i izvršava posao.
 
@@ -21,11 +21,11 @@ Baza podataka za ovu aplikaciju bi morala imati sledeće entitete:
 - **nezavisni**:
     - korisnik
     - server (guild)
+    - kanal
     - zadatak
-    - ban
     - log
 - **zavisni**:
-    - kanal (zavisi od servera)
+    - ban (zavisi od servera)
     - filter (zavisi od servera)
     - emotikon (zavisi od servera)
     - serverska konfiguracija (zavisi od servera)
@@ -55,9 +55,10 @@ Trigeri koji bi bili prisutni:
 - ``prilagodjeni_prefix``, ukoliko je postavljen (tj. nije nedefinisan), označava da se komande pozivaju sa prefiksom koji nije podrazumevajući (na primer podrazumevajući prefiks za komande je ``!``, ali korisnici mogu to da promene za njihov server).
 
 ### Kanal
-- Kanal odlikuje jedinstveni identifikator (``cid``), ``prilagodjeno_ime`` i ``tip``.
+- Kanal odlikuje jedinstveni identifikator (``cid``), ``prilagodjeno_ime``, ``guild_gid`` i ``tip``.
 - Kanal koji se nalazi u bazi mora postojati na Discord platformi jer se jedinstveni identifikator tog kanala koristi u bazi kao ``cid`` (channel id).
 - ``prilagodjeno_ime`` služi kao "nadimak" za kanal. Može imati nedefinisane vrednosti, i u tom slučaju se koristi ime kanala koje Discord pamti.
+- ``guild_gid`` je identifikator servera kome kanal pripada. Kanal pripada tačno jednom serveru.
 - ``tip`` može biti ``tekstualni``, ``glasovni`` ili ``kategorija``. U zavisnosti od tipa kanala se odredjuju funkcije koje se smeju izvoditi nad datim kanalom (na primer audio zapis se sme puštati samo u glasovnim kanalima).
 
 ### Veze izmedju korisnika, servera i kanala:
@@ -78,7 +79,7 @@ Trigeri koji bi bili prisutni:
 
 ### Emotikon (Emoji)
 - Server može definisati emotikone specifične za taj server (mogu se koristiti samo u kanalima tog servera).
-- Jedan emotikon odlikuje ``ime`` (jedinstveno za server), ``unicode_reprezentacija``, ``datum_kreiranja`` i ``autor_uid`` (uid autora emotikona). Bot zamenjuje svako pojavljivanje niske ``:ime:`` (Discord emotikonima daje imena ogradjena dvotačkama) sa unikod reprezentacijom postavljenom za to ime (npr za ime ```smile``` i unikod reprezentaciju: ```😊```, svako pojavljivanje niske ```:smile:``` se u porukama menja sa ```😊```).
+- Jedan emotikon odlikuje ``ime`` (jedinstveno za server), ``unicode_reprezentacija``, ``datum_kreiranja`` i ``autor_uid`` (uid autora emotikona). Bot zamenjuje svako pojavljivanje niske ``:ime:`` (Discord emotikonima daje imena ogradjena dvotačkama) sa unikod reprezentacijom postavljenom za to ime (npr za ime ```myemoji``` i unikod reprezentaciju: ```😊```, svako pojavljivanje niske ```:myemoji:``` se u porukama menja sa ```😊```).
 - Server može imati od 0 do više emotikona ali jedan emotikon može da pripada tačno jednom serveru.
 - Jedan član servera može napraviti više emotikona ali ne mora napraviti nijedan. Svaki emotikon ima tačno jednog autora. Ukoliko autor emotikona napusti server, polje autora se postavlja na nedefinisanu vrednost.
 - Više različitih servera može imati emotikone sa istim imenom.
