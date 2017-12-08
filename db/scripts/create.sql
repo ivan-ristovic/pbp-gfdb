@@ -73,15 +73,15 @@ ENGINE = InnoDB;
 -- Table `Clan_Kanala`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Clan_Kanala` (
-  `clan_uid` BIGINT(20) NOT NULL,
+  `korisnik_uid` BIGINT(20) NOT NULL,
   `kanal_cid` BIGINT(20) NOT NULL,
   `prilagodjene_permisije` BIT(8) NULL DEFAULT 0,
   INDEX `fk_Pripada_Guildu_has_Kanal_Kanal1_idx` (`kanal_cid` ASC),
-  INDEX `fk_Pripada_Guildu_has_Kanal_Pripada_Guildu1_idx` (`clan_uid` ASC),
-  PRIMARY KEY (`kanal_cid`, `clan_uid`),
+  INDEX `fk_Pripada_Guildu_has_Kanal_Pripada_Guildu1_idx` (`korisnik_uid` ASC),
+  PRIMARY KEY (`kanal_cid`, `korisnik_uid`),
   CONSTRAINT `fk_Pripada_Guildu_has_Kanal_Pripada_Guildu1`
-    FOREIGN KEY (`clan_uid`)
-    REFERENCES `Clan_Guilda` (`korisnik_uid`)
+    FOREIGN KEY (`korisnik_uid`)
+    REFERENCES `Korisnik` (`uid`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Pripada_Guildu_has_Kanal_Kanal1`
@@ -114,15 +114,15 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Emoji` (
   `ime` VARCHAR(20) NOT NULL,
-  `parent_gid` BIGINT(20) NOT NULL,
+  `guild_gid` BIGINT(20) NOT NULL,
   `autor_uid` BIGINT(20),
   `datum_kreiranja` DATETIME NOT NULL,
   `unicode_reprezentacija` CHAR(1) NOT NULL,
-  PRIMARY KEY (`ime`, `parent_gid`),
-  INDEX `fk_Emoji_Guild1_idx` (`parent_gid` ASC),
+  PRIMARY KEY (`ime`, `guild_gid`),
+  INDEX `fk_Emoji_Guild1_idx` (`guild_gid` ASC),
   INDEX `fk_Emoji_Korisnik1_idx` (`autor_uid` ASC),
   CONSTRAINT `fk_Emoji_Guild1`
-    FOREIGN KEY (`parent_gid`)
+    FOREIGN KEY (`guild_gid`)
     REFERENCES `Guild` (`gid`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
@@ -165,13 +165,13 @@ CREATE TABLE IF NOT EXISTS `Konfiguracija_Servera` (
   CONSTRAINT `fk_Konfiguracija_Servera_Kanal1`
     FOREIGN KEY (`welcome_cid`)
     REFERENCES `Kanal` (`cid`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    ON DELETE SET NULL
+    ON UPDATE SET NULL,
   CONSTRAINT `fk_Konfiguracija_Servera_Kanal2`
     FOREIGN KEY (`leave_cid`)
     REFERENCES `Kanal` (`cid`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+    ON DELETE SET NULL
+    ON UPDATE SET NULL)
 ENGINE = InnoDB;
 
 
