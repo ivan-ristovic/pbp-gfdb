@@ -34,10 +34,10 @@ Baza podataka za ovu aplikaciju bi morala imati sledeće entitete:
     - član kanala (veza: član servera - kanal)
 
 Trigeri koji bi bili prisutni:
-- izmene servera, kanala, serverske konfiguracije itd. bi bile dodate u log
 - svaka akcija banovanja / unbanovanja se mora dodati u log
-- izvršavanje zadataka (brisanje zadatka iz baze jer se zadatak izvršio) se takodje mora logovati
-- svako dodavanje ili izmena filtera, emotikona se mora logovati
+- banovanje korisnika znači brisanje njegovog članstva iz servera i svih kanala koji pripadaju tom serveru
+- ne dozvoliti ponovni ulaz banovanom korisniku
+- razne akcije se moraju dodati u log
 - itd.
 
 <br>
