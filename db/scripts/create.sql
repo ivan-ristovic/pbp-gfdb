@@ -1,9 +1,5 @@
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
-
 DROP DATABASE IF EXISTS pbp_gfdb;
-CREATE DATABASE IF NOT EXISTS pbp_gfdb;
+CREATE DATABASE pbp_gfdb;
 USE pbp_gfdb;
 
 -- -----------------------------------------------------
@@ -74,14 +70,15 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Clan_Kanala` (
   `korisnik_uid` BIGINT(20) NOT NULL,
+  `guild_gid` BIGINT(20) NOT NULL,
   `kanal_cid` BIGINT(20) NOT NULL,
   `prilagodjene_permisije` BIT(8) NULL DEFAULT 0,
   INDEX `fk_Pripada_Guildu_has_Kanal_Kanal1_idx` (`kanal_cid` ASC),
   INDEX `fk_Pripada_Guildu_has_Kanal_Pripada_Guildu1_idx` (`korisnik_uid` ASC),
   PRIMARY KEY (`kanal_cid`, `korisnik_uid`),
   CONSTRAINT `fk_Pripada_Guildu_has_Kanal_Pripada_Guildu1`
-    FOREIGN KEY (`korisnik_uid`)
-    REFERENCES `Korisnik` (`uid`)
+    FOREIGN KEY (`korisnik_uid`, `guild_gid`)
+    REFERENCES `Clan_Guilda` (`korisnik_uid`, `guild_gid`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_Pripada_Guildu_has_Kanal_Kanal1`
@@ -125,12 +122,12 @@ CREATE TABLE IF NOT EXISTS `Emoji` (
     FOREIGN KEY (`guild_gid`)
     REFERENCES `Guild` (`gid`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE,
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Emoji_Korisnik1`
     FOREIGN KEY (`autor_uid`)
     REFERENCES `Korisnik` (`uid`)
     ON DELETE SET NULL
-    ON UPDATE CASCADE)
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -166,12 +163,12 @@ CREATE TABLE IF NOT EXISTS `Konfiguracija_Servera` (
     FOREIGN KEY (`welcome_cid`)
     REFERENCES `Kanal` (`cid`)
     ON DELETE SET NULL
-    ON UPDATE SET NULL,
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_Konfiguracija_Servera_Kanal2`
     FOREIGN KEY (`leave_cid`)
     REFERENCES `Kanal` (`cid`)
     ON DELETE SET NULL
-    ON UPDATE SET NULL)
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -224,6 +221,4 @@ CREATE TABLE IF NOT EXISTS `Log` (
 ENGINE = InnoDB;
 
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
