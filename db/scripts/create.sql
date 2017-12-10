@@ -93,7 +93,7 @@ ENGINE = InnoDB;
 -- Table `Filter`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Filter` (
-  `fid` INT NOT NULL,
+  `fid` INT NOT NULL AUTO_INCREMENT,
   `guild_gid` BIGINT(20) NOT NULL,
   `filter_regex` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`fid`, `guild_gid`),
@@ -135,7 +135,7 @@ ENGINE = InnoDB;
 -- Table `Zadatak`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Zadatak` (
-  `tid` INT NOT NULL,
+  `tid` INT NOT NULL AUTO_INCREMENT,
   `sadrzaj` VARCHAR(45) NOT NULL,
   `vreme_izvrsavanja` DATETIME NOT NULL,
   PRIMARY KEY (`tid`))
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `Ban` (
   `banovani_uid` BIGINT(20) NOT NULL,
   `guild_gid` BIGINT(20) NOT NULL,
   `autor_uid` BIGINT(20),
-  `vreme` DATETIME NULL DEFAULT NULL,
+  `vreme` DATETIME NULL,
   `razlog` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`guild_gid`, `banovani_uid`),
   INDEX `fk_Ban_Guild1_idx` (`guild_gid` ASC),
@@ -206,8 +206,8 @@ ENGINE = InnoDB;
 -- Table `Log`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Log` (
-  `lid` INT NOT NULL,
-  `uid_izvrsioca` BIGINT(20) NOT NULL,
+  `lid` INT NOT NULL AUTO_INCREMENT,
+  `uid_izvrsioca` BIGINT(20) NULL DEFAULT NULL,
   `komanda` VARCHAR(64) NOT NULL,
   `vreme_izvrsavanja` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `komentar` VARCHAR(128) NULL,

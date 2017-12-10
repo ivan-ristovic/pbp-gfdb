@@ -74,5 +74,42 @@ BEGIN
 END$
 
 
+CREATE TRIGGER tr_Ban_ADEL_Log
+AFTER DELETE ON Ban
+FOR EACH ROW
+BEGIN
+  INSERT INTO Log VALUES 
+  (default, old.autor_uid, CONCAT('unban: ', old.banovani_uid), default, default);
+END$
+
+
+CREATE TRIGGER tr_Konfiguracija_Servera_AUPD_Log
+AFTER UPDATE ON Konfiguracija_Servera
+FOR EACH ROW
+BEGIN
+  INSERT INTO Log VALUES 
+  (default, default, CONCAT('updated ', new.guild_gid), default, default);
+END$
+
+
+CREATE TRIGGER tr_Zadatak_AINS_Log
+AFTER INSERT ON Zadatak
+FOR EACH ROW
+BEGIN
+  INSERT INTO Log VALUES 
+  (default, default, CONCAT('task added for execution at: ', new.vreme_izvrsavanja), default, CONCAT('task content: ', new.sadrzaj));
+END$
+
+
+CREATE TRIGGER tr_Zadatak_ADEL_Log
+AFTER DELETE ON Zadatak
+FOR EACH ROW
+BEGIN
+  INSERT INTO Log VALUES 
+  (default, default, CONCAT('task removed'), default, CONCAT('task content: ', old.sadrzaj));
+END$
+
+
+
 DELIMITER ;
 
