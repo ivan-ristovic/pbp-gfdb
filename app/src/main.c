@@ -10,7 +10,7 @@ int main()
 
     while (1) {
         printf("> ");
-        if (fgets(line, 512, stdin) == NULL)
+        if (fgets(line, 512, stdin) == NULL || is_empty(line))
             continue;
         int arg_c;
         char **parsed_data = parse(line, &arg_c);

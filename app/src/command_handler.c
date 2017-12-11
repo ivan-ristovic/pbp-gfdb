@@ -4,66 +4,87 @@
 #include "command_handler.h"
 
 
-void process_command(char **parsed_data, int arg_c)
+void process_command(const char **parsed_data, int arg_c)
 {
     if (!strcmp(parsed_data[0], "exit")) {
         exit(EXIT_SUCCESS);
     } else if (!strcmp(parsed_data[0], "delguild")) {
-        delguild(parsed_data);
+        if (arg_c >= 2)
+            delguild(parsed_data);
+        else
+            printf("Not enough arguments provided for command: delguild");
     } else if (!strcmp(parsed_data[0], "addmember")) {
-        addmember(parsed_data);
+        if (arg_c >= 3)
+            addmember(parsed_data);
+        else
+            printf("Not enough arguments provided for command: addmember");
     } else if (!strcmp(parsed_data[0], "updmember")) {
-        updmember(parsed_data);
+        if (arg_c >= 4)
+            updmember(parsed_data);
+        else
+            printf("Not enough arguments provided for command: updmember");
     } else if (!strcmp(parsed_data[0], "ban")) {
-        ban(parsed_data);
+        if (arg_c >= 3)
+            ban(parsed_data);
+        else
+            printf("Not enough arguments provided for command: ban");
     } else if (!strcmp(parsed_data[0], "unban")) {
-        unban(parsed_data);
+        if (arg_c >= 2)
+            unban(parsed_data);
+        else
+            printf("Not enough arguments provided for command: unban");
     } else if (!strcmp(parsed_data[0], "nickname")) {
-        nickname(parsed_data);
+        if (arg_c >= 3)
+            nickname(parsed_data);
+        else
+            printf("Not enough arguments provided for command: nickname");
     } else if (!strcmp(parsed_data[0], "q")) {
-        q(parsed_data);
+        if (arg_c >= 2)
+            q(parsed_data);
+        else
+            printf("Not enough arguments provided for command: q");
     } else {
         printf("Unknown command.");
     }
 }
 
 
-void delguild(char **parsed_data)
+void delguild(const char **parsed_data)
 {
     printf("delguild");
 }
 
-void addmember(char **parsed_data)
+void addmember(const char **parsed_data)
 {
     printf("addmember");
 }
 
 
-void updmember(char **parsed_data)
+void updmember(const char **parsed_data)
 {
     printf("updmember");
 }
 
 
-void ban(char **parsed_data)
+void ban(const char **parsed_data)
 {
     printf("ban");
 }
 
 
-void unban(char **parsed_data)
+void unban(const char **parsed_data)
 {
     printf("unban");
 }
 
 
-void nickname(char **parsed_data)
+void nickname(const char **parsed_data)
 {
     printf("nickname");
 }
 
 
-void q(char **parsed_data)
+void q(const char **parsed_data)
 {
     printf("q");
 }

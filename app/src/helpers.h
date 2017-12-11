@@ -2,6 +2,7 @@
 #define _H_HELPERS_H
 
 char** parse(char *str, int *arg_c);
+int is_empty(const char *s);
 void error(const char *msg);
 
 #endif
