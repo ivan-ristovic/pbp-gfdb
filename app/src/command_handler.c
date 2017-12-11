@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "helpers.h"
 #include "command_handler.h"
 
 
@@ -43,6 +44,8 @@ void process_command(const char **parsed_data, int arg_c)
             q(parsed_data);
         else
             printf("Not enough arguments provided for command: q");
+    } else if (!strcmp(parsed_data[0], "help")) {
+        print_help();
     } else {
         printf("Unknown command.");
     }

@@ -25,6 +25,7 @@ char** parse(char *str, int *arg_c)
     return res;
 }
 
+
 int is_empty(const char *s) {
     while (*s != '\0') {
         if (!isspace((unsigned char)*s))
@@ -32,6 +33,26 @@ int is_empty(const char *s) {
         s++;
     }
     return 1;
+}
+
+
+void print_help()
+{
+    printf(
+        " Commands:\n"
+        " - delguild <gid>\n"
+        "\tBrisanje servera iz baze, kao i svih njegovih kanala, filtera, emotikona itd.\n"
+        " - addmember <uid> <gid>\n"
+        "\tDodaje korisnika u tabelu Clan_Guilda.\n"
+        " - updmember <uid> <gid> <perms>\n"
+        "\tUpdatuje permisije korisnika\n"
+        " - ban <uid> <timestamp>\n"
+        "\tDodaje ban za dati uid i vreme trajanja.\n"
+        " - unban <uid>\n"
+        "\tUklanja uid ban.\n"
+        " - nickname <uid> <name>\n"
+        "\tDodaje novo prilagodjeno ime korisniku"
+    );
 }
 
 

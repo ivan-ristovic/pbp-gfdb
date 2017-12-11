@@ -9,5 +9,6 @@ void ban(const char **parsed_data);
 void unban(const char **parsed_data);
 void nickname(const char **parsed_data);
 void q(const char **parsed_data);
+void help();
 
 #endif
