@@ -1,10 +1,11 @@
-CC  	= gcc
-CCFLAGS	= -Wall -Wextra
-PROGRAM	= ../program
-OBJ 	= 		 \
-	main.o		 \
-	helpers.o
-VPATH 	= src
+CC      = gcc
+CCFLAGS = -Wall -Wextra
+PROGRAM = ../program
+OBJ     =             \
+    main.o            \
+    helpers.o         \
+    command_handler.o
+VPATH    = src
 
 
 %.o: %.c
