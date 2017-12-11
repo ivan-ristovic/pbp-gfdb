@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "helpers.h"
 
-char** parse(char *str, int *arg_c);
 void process_command(char **parsed_data, int arg_c);
-void error(const char *msg);
 
 
 int main()
@@ -26,24 +25,6 @@ int main()
 }
 
 
-char** parse(char *str, int *arg_c)
-{
-    char **res = NULL;
-    int n = 0;
-
-    char *split_word = strtok (str," ");
-    while (split_word != NULL) {
-        n++;
-        res = realloc(res, n * sizeof(char*));
-        if (res == NULL)
-            error("realloc failed.");
-        res[n-1] = split_word;
-        split_word = strtok (NULL, " ");
-    }
-
-    *arg_c = n;
-    return res;
-}
 
 void process_command(char **parsed_data, int arg_c)
 {
@@ -65,10 +46,4 @@ void process_command(char **parsed_data, int arg_c)
         printf("q");
     else
         printf("Unknown command.");
-}
-
-void error(const char * msg)
-{
-    perror(msg);
-    exit(EXIT_FAILURE);
 }
