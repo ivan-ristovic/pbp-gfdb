@@ -1,4 +1,5 @@
 CC      = gcc
+CCLIBS  = -I/usr/include/mysql/ -lmysqlclient
 CCFLAGS = -Wall -Wextra
 PROGRAM = ../program
 OBJ     =             \
@@ -9,7 +10,7 @@ VPATH    = src
 
 
 %.o: %.c
-	$(CC) -c -o $@ $< $(CCFLAGS)
+	$(CC) -c -o $@ $< $(CCLIBS) $(CCFLAGS)
 
 $(PROGRAM): $(OBJ)
 	$(CC) -o $@ $^ $(CCLIBS) $(CCFLAGS)

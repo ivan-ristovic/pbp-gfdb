@@ -16,6 +16,8 @@ int main()
         char **parsed_data = parse(line, &arg_c);
         process_command(parsed_data, arg_c);
         printf("\n");
+        for (int i = 0; i < arg_c; i++)
+            free(parsed_data[i]);
         free(parsed_data);
     }
 
