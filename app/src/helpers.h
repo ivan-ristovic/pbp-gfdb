@@ -3,7 +3,9 @@
 
 char** parse(char *str, int *arg_c);
 int is_empty(const char *s);
+unsigned long long parse_id(const char *s);
 void print_help();
 void error(const char *msg);
+void invalid_argument(const char *msg);
 
 #endif

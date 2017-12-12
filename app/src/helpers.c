@@ -26,6 +26,17 @@ char** parse(char *str, int *arg_c)
 }
 
 
+unsigned long long parse_id(const char *s)
+{
+    char *endptr;
+    long long id = strtoll(s, &endptr, 10);
+    if (*s != '\0' && *endptr == '\0')
+        return (unsigned long long)((id >= 0) ? id : -id);
+    else
+        return 0;
+}
+
+
 int is_empty(const char *s) {
     while (*s != '\0') {
         if (!isspace((unsigned char)*s))
@@ -60,4 +71,10 @@ void error(const char * msg)
 {
     perror(msg);
     exit(EXIT_FAILURE);
+}
+
+
+void invalid_argument(const char *msg)
+{
+    printf("Invalid argument provided: `%s`", msg);
 }

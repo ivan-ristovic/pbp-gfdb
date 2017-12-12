@@ -26,7 +26,7 @@ void process_command(const char **parsed_data, int arg_c)
             printf("Not enough arguments provided for command: updmember");
     } else if (!strcmp(parsed_data[0], "ban")) {
         if (arg_c >= 3)
-            ban(parsed_data);
+            ban(parsed_data, arg_c == 3);
         else
             printf("Not enough arguments provided for command: ban");
     } else if (!strcmp(parsed_data[0], "unban")) {
@@ -57,6 +57,7 @@ void delguild(const char **parsed_data)
     printf("delguild");
 }
 
+
 void addmember(const char **parsed_data)
 {
     printf("addmember");
@@ -69,15 +70,35 @@ void updmember(const char **parsed_data)
 }
 
 
-void ban(const char **parsed_data)
+void ban(const char **parsed_data, int indefinite)
 {
-    printf("ban");
+    unsigned long long uid = parse_id(parsed_data[1]);
+    unsigned long long gid = parse_id(parsed_data[2]);
+    if (uid == 0) {
+        invalid_argument("uid");
+        return;
+    }
+    if (gid == 0) {
+        invalid_argument("gid");
+        return;
+    }
+    printf("Banned `%llu` from guild `%llu` until `%s`", uid, gid, (indefinite ? "indefinite" : parsed_data[3]));
 }
 
 
 void unban(const char **parsed_data)
 {
-    printf("unban");
+    unsigned long long uid = parse_id(parsed_data[1]);
+    unsigned long long gid = parse_id(parsed_data[2]);
+    if (uid == 0) {
+        invalid_argument("uid");
+        return;
+    }
+    if (gid == 0) {
+        invalid_argument("gid");
+        return;
+    }
+    printf("Banned %llu from guild %llu", uid, gid);
 }
 
 
