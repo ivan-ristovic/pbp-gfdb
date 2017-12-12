@@ -12,12 +12,12 @@ Primeri komandi:
 - ``updmember <uid> <gid> <perms>``
     * Updatuje permisije korisnika
     * Izaziva triger logovanja.
-- ``ban <uid> <timestamp>``
-    * Dodaje ban za dati uid i vreme trajanja.
+- ``ban <uid> <gid> <timestamp>``
+    * Dodaje ban za dati uid i gid i vreme trajanja.
     * Izaziva triger brisanja članstva tog korisnika za taj server i članstva u svim kanalima koji pripadaju tom serveru.
     * Izaziva triger logovanja.
-- ``unban <uid>``
-    * Uklanja uid ban.
+- ``unban <uid> <gid>``
+    * Uklanja uid ban za guild sa datim gid-om.
     * Izaziva triger logovanja.
 - ``nickname <uid> <name>``
     * Dodaje novo prilagodjeno ime korisniku
