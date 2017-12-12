@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "helpers.h"
+#include "database.h"
 
 
 char** parse(char *str, int *arg_c)
@@ -71,11 +72,19 @@ void print_help()
 void error(const char * msg)
 {
     perror(msg);
-    exit(EXIT_FAILURE);
+    clean_up_and_exit(EXIT_FAILURE);
 }
 
 
 void invalid_argument(const char *msg)
 {
     printf("Invalid argument provided: `%s`", msg);
+}
+
+
+void clean_up_and_exit(int excode)
+{
+    close_db_connection();
+    printf("Exiting...\n");
+    exit(excode);
 }

@@ -9,7 +9,7 @@
 void process_command(char **parsed_data, int arg_c)
 {
     if (!strcmp(parsed_data[0], "exit")) {
-        exit(EXIT_SUCCESS);
+        clean_up_and_exit(EXIT_SUCCESS);
     } else if (!strcmp(parsed_data[0], "delguild") || !strcmp(parsed_data[0], "dg")) {
         if (arg_c >= 2)
             delguild(parsed_data);
@@ -151,5 +151,6 @@ void q(char **parsed_data, int arg_c)
         strcat(query, parsed_data[i]);
         strcat(query, " ");
     }
-    execute_query(query);
+    if (!execute_query(query))
+        printf("Invalid query.");
 }

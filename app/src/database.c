@@ -59,3 +59,13 @@ void print_splitter(int col_num)
         printf("----------------------+");
     putchar('\n');
 }
+
+
+void close_db_connection()
+{
+    if (_db != NULL) {
+        mysql_close(_db);
+        _db = NULL;
+        printf("Database connection closed.\n");
+    }
+}

@@ -24,5 +24,5 @@ int main()
         free(parsed_data);
     }
 
-    exit(EXIT_SUCCESS);
+    clean_up_and_exit(EXIT_SUCCESS);
 }

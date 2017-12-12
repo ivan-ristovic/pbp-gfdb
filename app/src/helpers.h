@@ -7,5 +7,6 @@ unsigned long long parse_id(const char *s);
 void print_help();
 void error(const char *msg);
 void invalid_argument(const char *msg);
+void clean_up_and_exit();
 
 #endif
