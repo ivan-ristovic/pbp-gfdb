@@ -25,7 +25,7 @@ int execute_query(const char *query)
 
     int col_num = mysql_num_fields(res);
 
-    print_border(col_num);
+    print_splitter(col_num);
 
     // Header
     MYSQL_FIELD *field = mysql_fetch_field(res);
@@ -45,7 +45,7 @@ int execute_query(const char *query)
         putchar('\n');
     }
 
-    print_border(col_num);
+    print_splitter(col_num);
 
     mysql_free_result(res);
     return 1;
@@ -54,17 +54,8 @@ int execute_query(const char *query)
 
 void print_splitter(int col_num)
 {
-    printf("|");
-    for (int i = 0; i < col_num; i++)
-        printf("----------------------|");
-    printf("\n");
-}
-
-
-void print_border(int col_num)
-{
     printf("+");
     for (int i = 0; i < col_num; i++)
-        printf("-----------------------");
-    printf("+\n");
+        printf("----------------------+");
+    putchar('\n');
 }
