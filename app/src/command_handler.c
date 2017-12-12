@@ -3,9 +3,10 @@
 #include <string.h>
 #include "helpers.h"
 #include "command_handler.h"
+#include "database.h"
 
 
-void process_command(const char **parsed_data, int arg_c)
+void process_command(char **parsed_data, int arg_c)
 {
     if (!strcmp(parsed_data[0], "exit")) {
         exit(EXIT_SUCCESS);
@@ -52,7 +53,7 @@ void process_command(const char **parsed_data, int arg_c)
 }
 
 
-void delguild(const char **parsed_data)
+void delguild(char **parsed_data)
 {
     unsigned long long gid = parse_id(parsed_data[1]);
     if (gid == 0) {
@@ -63,7 +64,7 @@ void delguild(const char **parsed_data)
 }
 
 
-void addmember(const char **parsed_data)
+void addmember(char **parsed_data)
 {
     unsigned long long uid = parse_id(parsed_data[1]);
     unsigned long long gid = parse_id(parsed_data[2]);
@@ -79,7 +80,7 @@ void addmember(const char **parsed_data)
 }
 
 
-void updmember(const char **parsed_data)
+void updmember(char **parsed_data)
 {
     unsigned long long uid = parse_id(parsed_data[1]);
     unsigned long long gid = parse_id(parsed_data[2]);
@@ -100,7 +101,7 @@ void updmember(const char **parsed_data)
 }
 
 
-void ban(const char **parsed_data, int indefinite)
+void ban(char **parsed_data, int indefinite)
 {
     unsigned long long uid = parse_id(parsed_data[1]);
     unsigned long long gid = parse_id(parsed_data[2]);
@@ -116,7 +117,7 @@ void ban(const char **parsed_data, int indefinite)
 }
 
 
-void unban(const char **parsed_data)
+void unban(char **parsed_data)
 {
     unsigned long long uid = parse_id(parsed_data[1]);
     unsigned long long gid = parse_id(parsed_data[2]);
@@ -132,7 +133,7 @@ void unban(const char **parsed_data)
 }
 
 
-void nickname(const char **parsed_data)
+void nickname(char **parsed_data)
 {
     unsigned long long uid = parse_id(parsed_data[1]);
     if (uid == 0) {
@@ -143,12 +144,12 @@ void nickname(const char **parsed_data)
 }
 
 
-void q(const char **parsed_data, int arg_c)
+void q(char **parsed_data, int arg_c)
 {
     char query[512] = "\0";
     for (int i = 1; i < arg_c; i++) {
         strcat(query, parsed_data[i]);
         strcat(query, " ");
     }
-    printf("Executing query: ` %s`", query);
+    execute_query(query);
 }

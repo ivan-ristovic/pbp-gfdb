@@ -5,7 +5,8 @@ PROGRAM = ../program
 OBJ     =             \
     main.o            \
     helpers.o         \
-    command_handler.o
+    command_handler.o \
+	database.o
 VPATH    = src
 
 
