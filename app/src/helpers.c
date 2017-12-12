@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "helpers.h"
 
 
@@ -30,10 +31,10 @@ unsigned long long parse_id(const char *s)
 {
     char *endptr;
     long long id = strtoll(s, &endptr, 10);
-    if (*s != '\0' && *endptr == '\0')
-        return (unsigned long long)((id >= 0) ? id : -id);
+    if (*s != '\0' && *endptr == '\0' && id > 0ll)
+        return (unsigned long long)(id);
     else
-        return 0;
+        return 0llu;
 }
 
 
