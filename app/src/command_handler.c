@@ -10,6 +10,11 @@ void process_command(char **parsed_data, int arg_c)
 {
     if (!strcmp(parsed_data[0], "exit")) {
         clean_up_and_exit(EXIT_SUCCESS);
+    } else if (!strcmp(parsed_data[0], "show")) {
+        if (arg_c >= 2)
+            show_table(parsed_data[1]);
+        else
+            printf("Table name not provided.");
     } else if (!strcmp(parsed_data[0], "delguild") || !strcmp(parsed_data[0], "dg")) {
         if (arg_c >= 2)
             delguild(parsed_data);

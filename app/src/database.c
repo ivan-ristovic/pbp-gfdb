@@ -74,6 +74,14 @@ void print_splitter(int col_num)
 }
 
 
+void show_table(const char *table)
+{
+    char query[512];
+    sprintf(query, "SELECT * FROM %s", table);
+    execute_query(query);
+}
+
+
 void close_db_connection()
 {
     if (_db != NULL) {
