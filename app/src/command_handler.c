@@ -151,6 +151,7 @@ void q(char **parsed_data, int arg_c)
         strcat(query, parsed_data[i]);
         strcat(query, " ");
     }
+
     if (!execute_query(query))
         printf("Invalid query.");
 }

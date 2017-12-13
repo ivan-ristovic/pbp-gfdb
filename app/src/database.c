@@ -1,4 +1,7 @@
+
+#define _GNU_SOURCE
 #include <stdio.h>
+#include <string.h>
 #include <mysql.h>
 #include "database.h"
 #include "helpers.h"
@@ -18,9 +21,20 @@ void connect_to_db(const char *host, const char *user, const char *pass, const c
 
 int execute_query(const char *query)
 {
-    if (_db == NULL || mysql_query(_db, query))
+    printf("Executing query: ` %s`\n", query);
+    if (_db == NULL || mysql_query(_db, query)) {
+        printf("Error: %s\n", mysql_error(_db));
         return 0;
+    }
 
+    if (strcasestr(query, "select") == query)
+        print_query_results();
+    return 1;
+}
+
+
+void print_query_results()
+{
     MYSQL_RES *res = mysql_use_result(_db);
 
     int col_num = mysql_num_fields(res);
@@ -48,7 +62,6 @@ int execute_query(const char *query)
     print_splitter(col_num);
 
     mysql_free_result(res);
-    return 1;
 }
 
 
