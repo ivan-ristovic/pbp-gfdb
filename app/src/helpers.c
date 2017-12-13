@@ -52,7 +52,9 @@ int is_empty(const char *s) {
 void print_help()
 {
     printf(
-        " Commands:\n"
+        " Komande:\n"
+        " - show users/guilds/channel/bans/log/guildmem/channelmem/emoji/tasks/cfg\n"
+        "\tPrikazuje odgovarajucu tabelu.\n"
         " - delguild <gid>\n"
         "\tBrisanje servera iz baze, kao i svih njegovih kanala, filtera, emotikona itd.\n"
         " - addmember <uid> <gid>\n"
@@ -64,7 +66,7 @@ void print_help()
         " - unban <uid>\n"
         "\tUklanja uid ban.\n"
         " - nickname <uid> <name>\n"
-        "\tDodaje novo prilagodjeno ime korisniku"
+        "\tDodaje novo prilagodjeno ime korisniku\n"
     );
 }
 
