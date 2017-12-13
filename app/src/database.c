@@ -21,7 +21,7 @@ void connect_to_db(const char *host, const char *user, const char *pass, const c
 
 int execute_query(const char *query)
 {
-    printf("Executing query: ` %s`\n", query);
+    printf("Executing query: %s\n", query);
     if (_db == NULL || mysql_query(_db, query)) {
         printf("Error: %s\n", mysql_error(_db));
         return 0;

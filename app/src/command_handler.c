@@ -10,9 +10,9 @@ void process_command(char **parsed_data, int arg_c)
 {
     if (!strcmp(parsed_data[0], "exit")) {
         clean_up_and_exit(EXIT_SUCCESS);
-    } else if (!strcmp(parsed_data[0], "show")) {
+    } else if (!strcmp(parsed_data[0], "show") || !strcmp(parsed_data[0], "s")) {
         if (arg_c >= 2)
-            show_table(parsed_data[1]);
+            show(parsed_data[1]);
         else
             printf("Table name not provided.");
     } else if (!strcmp(parsed_data[0], "delguild") || !strcmp(parsed_data[0], "dg")) {
@@ -55,6 +55,33 @@ void process_command(char **parsed_data, int arg_c)
     } else {
         printf("Unknown command.");
     }
+}
+
+
+void show(const char *s)
+{
+    if (!strcmp(s, "users") || !strcmp(s, "u"))
+        show_table("Korisnik");
+    else if (!strcmp(s, "guilds") || !strcmp(s, "g"))
+        show_table("Guild");
+    else if (!strcmp(s, "channels") || !strcmp(s, "c"))
+        show_table("Kanal");
+    else if (!strcmp(s, "guildmem") || !strcmp(s, "gm"))
+        show_table("Clan_Guilda");
+    else if (!strcmp(s, "channelmem") || !strcmp(s, "cm"))
+        show_table("Clan_Kanala");
+    else if (!strcmp(s, "bans") || !strcmp(s, "b"))
+        show_table("Ban");
+    else if (!strcmp(s, "emoji") || !strcmp(s, "e"))
+        show_table("Emoji");
+    else if (!strcmp(s, "tasks") || !strcmp(s, "t"))
+        show_table("Zadatak");
+    else if (!strcmp(s, "log") || !strcmp(s, "l"))
+        show_table("Log");
+    else if (!strcmp(s, "cfg") || !strcmp(s, "c"))
+        show_table("Konfiguracija_Servera");
+    else
+        printf("Unknown table.");
 }
 
 
