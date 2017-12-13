@@ -14,25 +14,30 @@ void process_command(char **parsed_data, int arg_c)
         if (arg_c >= 2)
             show(parsed_data[1]);
         else
-            printf("Table name not provided.");
+            printf("Show what?");
     } else if (!strcmp(parsed_data[0], "delguild") || !strcmp(parsed_data[0], "dg")) {
         if (arg_c >= 2)
             delguild(parsed_data);
         else
             printf("Not enough arguments provided for command: delguild");
-    } else if (!strcmp(parsed_data[0], "addmember") || !strcmp(parsed_data[0], "am")) {
+    } else if (!strcmp(parsed_data[0], "addguildmember") || !strcmp(parsed_data[0], "+gm")) {
         if (arg_c >= 3)
-            addmember(parsed_data);
+            addguildmember(parsed_data);
         else
-            printf("Not enough arguments provided for command: addmember");
+            printf("Not enough arguments provided for command: addguildmember");
+    } else if (!strcmp(parsed_data[0], "addchannelmember") || !strcmp(parsed_data[0], "+cm")) {
+        if (arg_c >= 3)
+            addchannelmember(parsed_data);
+        else
+            printf("Not enough arguments provided for command: addchannelmember");
     } else if (!strcmp(parsed_data[0], "updmember") || !strcmp(parsed_data[0], "um")) {
         if (arg_c >= 4)
             updmember(parsed_data);
         else
             printf("Not enough arguments provided for command: updmember");
     } else if (!strcmp(parsed_data[0], "ban") || !strcmp(parsed_data[0], "b")) {
-        if (arg_c >= 3)
-            ban(parsed_data, arg_c == 3);
+        if (arg_c >= 4)
+            ban(parsed_data, arg_c - 1);
         else
             printf("Not enough arguments provided for command: ban");
     } else if (!strcmp(parsed_data[0], "unban") || !strcmp(parsed_data[0], "ub")) {
@@ -53,7 +58,7 @@ void process_command(char **parsed_data, int arg_c)
     } else if (!strcmp(parsed_data[0], "help") || !strcmp(parsed_data[0], "h")) {
         print_help();
     } else {
-        printf("Unknown command.");
+        printf("Unknown command: %s", parsed_data[0]);
     }
 }
 
@@ -92,11 +97,15 @@ void delguild(char **parsed_data)
         invalid_argument("gid");
         return;
     }
-    printf("Deleted guild `%llu`", gid);
+
+    char query[512];
+    sprintf(query, "DELETE FROM Guild WHERE gid = %llu;", gid);
+    if (execute_query(query))
+        printf("Deleted guild `%llu`", gid);
 }
 
 
-void addmember(char **parsed_data)
+void addguildmember(char **parsed_data)
 {
     unsigned long long uid = parse_id(parsed_data[1]);
     unsigned long long gid = parse_id(parsed_data[2]);
@@ -108,7 +117,31 @@ void addmember(char **parsed_data)
         invalid_argument("gid");
         return;
     }
-    printf("Added uid `%llu` as member of guild `%llu`", uid, gid);
+
+    char query[512];
+    sprintf(query, "INSERT INTO Clan_Guilda VALUES (%llu, %llu, DEFAULT, DEFAULT)", uid, gid);
+    if (execute_query(query))
+        printf("Added uid `%llu` as member of guild `%llu`", uid, gid);
+}
+
+
+void addchannelmember(char **parsed_data)
+{
+    unsigned long long uid = parse_id(parsed_data[1]);
+    unsigned long long cid = parse_id(parsed_data[2]);
+    if (uid == 0) {
+        invalid_argument("uid");
+        return;
+    }
+    if (cid == 0) {
+        invalid_argument("cid");
+        return;
+    }
+
+    char query[512];
+    sprintf(query, "INSERT INTO Clan_Kanala VALUES (%llu, (SELECT guild_gid FROM Kanal WHERE cid = %llu), %llu, DEFAULT)", uid, cid, cid);
+    if (execute_query(query))
+        printf("Added uid `%llu` as member of channel `%llu`", uid, cid);
 }
 
 
@@ -129,14 +162,19 @@ void updmember(char **parsed_data)
         invalid_argument("perms");
         return;
     }
-    printf("Set permission bytes for uid `%llu` in guild `%llu` to `%#04x`", uid, gid, perms);
+
+    char query[512];
+    sprintf(query, "UPDATE Clan_Guilda SET prilagodjene_permisije = %d WHERE korisnik_uid = %llu AND guild_gid = %llu", perms, uid, gid);
+    if (execute_query(query))
+        printf("Set permission bytes for uid `%llu` in guild `%llu` to `%#04x`", uid, gid, perms);
 }
 
 
-void ban(char **parsed_data, int indefinite)
+void ban(char **parsed_data, int argc)
 {
     unsigned long long uid = parse_id(parsed_data[1]);
     unsigned long long gid = parse_id(parsed_data[2]);
+    unsigned long long auid = parse_id(parsed_data[3]);
     if (uid == 0) {
         invalid_argument("uid");
         return;
@@ -145,7 +183,27 @@ void ban(char **parsed_data, int indefinite)
         invalid_argument("gid");
         return;
     }
-    printf("Banned uid `%llu` from guild `%llu` until `%s`", uid, gid, (indefinite ? "indefinite" : parsed_data[3]));
+    if (auid == 0) {
+        invalid_argument("autor_uid");
+        return;
+    }
+
+    char query[512];
+    char comment[512] = "";
+    if (argc < 4)
+        sprintf(query, "INSERT INTO Ban VALUES (%llu, %llu, %llu, DEFAULT, DEFAULT)", uid, gid, auid);
+    else if (argc < 5)
+        sprintf(query, "INSERT INTO Ban VALUES (%llu, %llu, %llu, %s, DEFAULT)", uid, gid, auid, parsed_data[3]);
+    else {
+        for (int i = 4; i < argc; i++) {
+            strcat(comment, parsed_data[i]);
+            strcat(comment, " ");
+        }
+        sprintf(query, "INSERT INTO Ban VALUES (%llu, %llu, %llu, %s, %s)", uid, gid, auid, parsed_data[3], parsed_data[4]);
+    }
+
+    if (execute_query(query))
+        printf("Banned uid `%llu` from guild `%llu` until `%s` by %llu (reason: %s)", uid, gid, (argc < 4 ? "indefinite" : parsed_data[3]), auid, (argc < 5 ? "none provided" : comment));
 }
 
 
@@ -161,7 +219,11 @@ void unban(char **parsed_data)
         invalid_argument("gid");
         return;
     }
-    printf("Unbanned uid %llu from guild %llu", uid, gid);
+
+    char query[512];
+    sprintf(query, "DELETE FROM Ban WHERE korisnik_uid = %llu AND guild_gid = %llu", uid, gid);
+    if (execute_query(query))
+        printf("Unbanned uid %llu from guild %llu", uid, gid);
 }
 
 
@@ -172,7 +234,11 @@ void nickname(char **parsed_data)
         invalid_argument("uid");
         return;
     }
-    printf("Changed nickname for uid `%llu` to `%s`", uid, parsed_data[2]);
+
+    char query[512];
+    sprintf(query, "UPDATE Korisnik SET prilagodjeno_ime = %s WHERE korisnik_uid = %llu", parsed_data[2], uid);
+    if (execute_query(query))
+        printf("Changed nickname for uid `%llu` to `%s`", uid, parsed_data[2]);
 }
 
 

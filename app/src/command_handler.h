@@ -4,7 +4,8 @@
 void process_command(char **parsed_data, int arg_c);
 void show(const char *s);
 void delguild(char **parsed_data);
-void addmember(char **parsed_data);
+void addguildmember(char **parsed_data);
+void addchannelmember(char **parsed_data);
 void updmember(char **parsed_data);
 void ban(char **parsed_data, int indefinite);
 void unban(char **parsed_data);
