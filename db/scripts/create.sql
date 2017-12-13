@@ -47,8 +47,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Clan_Guilda` (
   `korisnik_uid` BIGINT(20) NOT NULL,
   `guild_gid` BIGINT(20) NOT NULL,
-  `vreme_ulaska` DATETIME NOT NULL,
-  `prilagodjene_permisije` BIT(8) NULL DEFAULT 0,
+  `vreme_ulaska` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `prilagodjene_permisije` BIT(8) NOT NULL DEFAULT 0,
   PRIMARY KEY (`korisnik_uid`, `guild_gid`),
   INDEX `fk_Korisnik_has_Guild_Guild1_idx` (`guild_gid` ASC),
   INDEX `fk_Korisnik_has_Guild_Korisnik1_idx` (`korisnik_uid` ASC),
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `Clan_Kanala` (
   `korisnik_uid` BIGINT(20) NOT NULL,
   `guild_gid` BIGINT(20) NOT NULL,
   `kanal_cid` BIGINT(20) NOT NULL,
-  `prilagodjene_permisije` BIT(8) NULL DEFAULT 0,
+  `prilagodjene_permisije` BIT(8) NOT NULL DEFAULT 0,
   INDEX `fk_Pripada_Guildu_has_Kanal_Kanal1_idx` (`kanal_cid` ASC),
   INDEX `fk_Pripada_Guildu_has_Kanal_Pripada_Guildu1_idx` (`korisnik_uid` ASC),
   PRIMARY KEY (`kanal_cid`, `korisnik_uid`),
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `Emoji` (
   `ime` VARCHAR(20) NOT NULL,
   `guild_gid` BIGINT(20) NOT NULL,
   `autor_uid` BIGINT(20),
-  `datum_kreiranja` DATETIME NOT NULL,
+  `datum_kreiranja` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `unicode_reprezentacija` CHAR(1) NOT NULL,
   PRIMARY KEY (`ime`, `guild_gid`),
   INDEX `fk_Emoji_Guild1_idx` (`guild_gid` ASC),
@@ -219,6 +219,3 @@ CREATE TABLE IF NOT EXISTS `Log` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-
-
