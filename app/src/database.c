@@ -27,7 +27,7 @@ int execute_query(const char *query)
     #ifdef GLOBAL_DEBUG
         printf("Executing query: %s\n", query);
     #endif
-    
+
     if (_db == NULL || mysql_query(_db, query)) {
         printf("Error occured while executing the query:\n%s\n", mysql_error(_db));
         return 0;

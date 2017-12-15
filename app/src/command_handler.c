@@ -19,51 +19,51 @@ void process_command(char **parsed_data, int arg_c)
         if (arg_c >= 2)
             delguild(parsed_data);
         else
-            printf("Not enough arguments provided for command: delguild");
+            printf("Not enough arguments provided for command: delguild\n");
     } else if (!strcmp(parsed_data[0], "addguildmember") || !strcmp(parsed_data[0], "+gm")) {
         if (arg_c >= 3)
             addguildmember(parsed_data);
         else
-            printf("Not enough arguments provided for command: addguildmember");
+            printf("Not enough arguments provided for command: addguildmember\n");
     } else if (!strcmp(parsed_data[0], "addchannelmember") || !strcmp(parsed_data[0], "+cm")) {
         if (arg_c >= 3)
             addchannelmember(parsed_data);
         else
-            printf("Not enough arguments provided for command: addchannelmember");
+            printf("Not enough arguments provided for command: addchannelmember\n");
     } else if (!strcmp(parsed_data[0], "updmember") || !strcmp(parsed_data[0], "um")) {
         if (arg_c >= 4)
             updmember(parsed_data);
         else
-            printf("Not enough arguments provided for command: updmember");
+            printf("Not enough arguments provided for command: updmember\n");
     } else if (!strcmp(parsed_data[0], "ban") || !strcmp(parsed_data[0], "b")) {
         if (arg_c >= 4)
             ban(parsed_data, arg_c - 1);
         else
-            printf("Not enough arguments provided for command: ban");
+            printf("Not enough arguments provided for command: ban\n");
     } else if (!strcmp(parsed_data[0], "unban") || !strcmp(parsed_data[0], "ub")) {
         if (arg_c >= 2)
             unban(parsed_data);
         else
-            printf("Not enough arguments provided for command: unban");
+            printf("Not enough arguments provided for command: unban\n");
     } else if (!strcmp(parsed_data[0], "nickname") || !strcmp(parsed_data[0], "nick")) {
         if (arg_c >= 3)
             nickname(parsed_data);
         else
-            printf("Not enough arguments provided for command: nickname");
+            printf("Not enough arguments provided for command: nickname\n");
     } else if (!strcmp(parsed_data[0], "query") || !strcmp(parsed_data[0], "q")) {
         if (arg_c >= 2)
             q(parsed_data, arg_c);
         else
-            printf("Not enough arguments provided for command: q");
+            printf("Not enough arguments provided for command: query\n");
     } else if (!strcmp(parsed_data[0], "guildconfig") || !strcmp(parsed_data[0], "gcfg")) {
         if (arg_c >= 6)
             guildconfig(parsed_data);
         else
-            printf("Not enough arguments provided for command: q");
+            printf("Not enough arguments provided for command: guildconfig\n");
     } else if (!strcmp(parsed_data[0], "help") || !strcmp(parsed_data[0], "h")) {
         print_help();
     } else {
-        printf("Unknown command: %s", parsed_data[0]);
+        printf("Unknown command: %s\n", parsed_data[0]);
     }
 }
 
@@ -106,7 +106,7 @@ void delguild(char **parsed_data)
     char query[512];
     sprintf(query, "DELETE FROM Guild WHERE gid = %llu;", gid);
     if (execute_query(query))
-        printf("Deleted guild `%llu`", gid);
+        printf("Deleted guild %llu\n", gid);
 }
 
 
@@ -126,7 +126,7 @@ void addguildmember(char **parsed_data)
     char query[512];
     sprintf(query, "INSERT INTO Clan_Guilda VALUES (%llu, %llu, DEFAULT, DEFAULT)", uid, gid);
     if (execute_query(query))
-        printf("Added uid `%llu` as member of guild `%llu`", uid, gid);
+        printf("Added uid %llu as member of guild %llu\n", uid, gid);
 }
 
 
@@ -146,7 +146,7 @@ void addchannelmember(char **parsed_data)
     char query[512];
     sprintf(query, "INSERT INTO Clan_Kanala VALUES (%llu, (SELECT guild_gid FROM Kanal WHERE cid = %llu), %llu, DEFAULT)", uid, cid, cid);
     if (execute_query(query))
-        printf("Added uid `%llu` as member of channel `%llu`", uid, cid);
+        printf("Added uid %llu as member of channel %llu\n", uid, cid);
 }
 
 
@@ -171,7 +171,7 @@ void updmember(char **parsed_data)
     char query[512];
     sprintf(query, "UPDATE Clan_Guilda SET prilagodjene_permisije = %d WHERE korisnik_uid = %llu AND guild_gid = %llu", perms, uid, gid);
     if (execute_query(query))
-        printf("Set permission bytes for uid `%llu` in guild `%llu` to `%#04x`", uid, gid, perms);
+        printf("Set permission bytes for uid %llu in guild %llu to %#04x\n", uid, gid, perms);
 }
 
 
@@ -208,7 +208,7 @@ void ban(char **parsed_data, int argc)
     }
 
     if (execute_query(query))
-        printf("Banned uid `%llu` from guild `%llu` until `%s` by %llu (reason: %s)", uid, gid, (argc < 4 ? "indefinite" : parsed_data[3]), auid, (argc < 5 ? "none provided" : comment));
+        printf("Banned uid %llu from guild %llu until %s by %llu (reason: %s)\n", uid, gid, (argc < 4 ? "indefinite" : parsed_data[3]), auid, (argc < 5 ? "none provided" : comment));
 }
 
 
@@ -226,9 +226,9 @@ void unban(char **parsed_data)
     }
 
     char query[512];
-    sprintf(query, "DELETE FROM Ban WHERE korisnik_uid = %llu AND guild_gid = %llu", uid, gid);
+    sprintf(query, "DELETE FROM Ban WHERE banovani_uid = %llu AND guild_gid = %llu", uid, gid);
     if (execute_query(query))
-        printf("Unbanned uid %llu from guild %llu", uid, gid);
+        printf("Unbanned uid %llu from guild %llu\n", uid, gid);
 }
 
 
@@ -241,9 +241,9 @@ void nickname(char **parsed_data)
     }
 
     char query[512];
-    sprintf(query, "UPDATE Korisnik SET prilagodjeno_ime = %s WHERE korisnik_uid = %llu", parsed_data[2], uid);
+    sprintf(query, "UPDATE Korisnik SET prilagodjeno_ime = '%s' WHERE uid = %llu", parsed_data[2], uid);
     if (execute_query(query))
-        printf("Changed nickname for uid `%llu` to `%s`", uid, parsed_data[2]);
+        printf("Changed nickname for uid %llu to %s\n", uid, parsed_data[2]);
 }
 
 
