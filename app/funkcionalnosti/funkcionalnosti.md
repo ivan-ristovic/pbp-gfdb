@@ -6,8 +6,11 @@ Primeri komandi:
 - ``delguild <gid>``
     * Brisanje servera iz baze, kao i svih njegovih kanala, filtera, emotikona itd.
     * Izaziva triger brisanja svih članova tog servera i članova svih kanala koji pripadaju tom serveru (ne brišu se korisnici već samo informacije o članstvu iz tabela Clan_Guilda i Clan_Kanala).
-- ``addmember <uid> <gid>``
+- ``addguildmember <uid> <gid>``
     * Dodaje korisnika u tabelu Clan_Guilda.
+    * Izaziva triger provere pre unosa da li je korisnik banovan i ako jeste, sprečava unos.
+- ``addchannelmember <uid> <cid>``
+    * Dodaje korisnika u tabelu Clan_Kanala.
     * Izaziva triger provere pre unosa da li je korisnik banovan i ako jeste, sprečava unos.
 - ``updmember <uid> <gid> <perms>``
     * Updatuje permisije korisnika
@@ -20,6 +23,10 @@ Primeri komandi:
     * Uklanja uid ban za guild sa datim gid-om.
     * Izaziva triger logovanja.
 - ``nickname <uid> <name>``
-    * Dodaje novo prilagodjeno ime korisniku
-- razne komande za ispis trenutnih servera, clanova itd.
-    * Plan je da se ovde doda ispis stanja baze kao i izvršavanje raw SQL upita (npr ``q SELECT * FROM Guild;``).
+    * Dodaje novo prilagodjeno ime korisniku.
+- ``guildconfig <gid> <wcid> <lcid> <antispam> <antiflood>``
+    * Menja guild konfiguraciju (wcid - welcome kanal id, lcid - leave kanal id, antispam i antiflood su boolean vrednosti).
+- ``show users/guilds/channel/bans/log/guildmem/channelmem/emoji/tasks/gcfg``
+    * Prikazuje odgovarajucu tabelu.
+- ``query <sql upit>``
+    * Odradjuje SQL upit.
