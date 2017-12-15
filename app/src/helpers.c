@@ -53,7 +53,7 @@ void print_help()
 {
     printf(
         " Komande:\n"
-        " - show users/guilds/channel/bans/log/guildmem/channelmem/emoji/tasks/cfg\n"
+        " - show users/guilds/channel/bans/log/guildmem/channelmem/emoji/tasks/gcfg\n"
         "\tPrikazuje odgovarajucu tabelu.\n"
         " - delguild <gid>\n"
         "\tBrisanje servera iz baze, kao i svih njegovih kanala, filtera, emotikona itd.\n"
@@ -65,10 +65,12 @@ void print_help()
         "\tUpdatuje permisije korisnika\n"
         " - ban <uid> <gid> <autor_gid> [timestamp] [reason]\n"
         "\tDodaje ban za dati uid i vreme trajanja.\n"
-        " - unban <uid>\n"
-        "\tUklanja uid ban.\n"
+        " - unban <uid> <gid>\n"
+        "\tUklanja uid ban za guild sa datim gid-om.\n"
         " - nickname <uid> <name>\n"
         "\tDodaje novo prilagodjeno ime korisniku\n"
+        " - guildconfig <gid> <wcid> <lcid> <antispam> <antiflood>\n"
+        "\tMenja guild konfiguraciju (wcid - welcome kanal id, lcid - leave kanal id, antispam i antiflood su boolean vrednosti)\n"
     );
 }
 

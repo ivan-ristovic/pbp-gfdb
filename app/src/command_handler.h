@@ -10,6 +10,7 @@ void updmember(char **parsed_data);
 void ban(char **parsed_data, int indefinite);
 void unban(char **parsed_data);
 void nickname(char **parsed_data);
+void guildconfig(char **parsed_data);
 void q(char **parsed_data, int arg_c);
 void help();
 

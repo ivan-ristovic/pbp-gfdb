@@ -15,15 +15,21 @@ void connect_to_db(const char *host, const char *user, const char *pass, const c
     _db = mysql_init(NULL);
     if (!mysql_real_connect(_db, host, user, pass, db, 0, NULL, 0))
         error(mysql_error(_db));
-    printf("Database connection established.\n");
+
+    #ifdef GLOBAL_DEBUG
+        printf("Database connection established.\n");
+    #endif
 }
 
 
 int execute_query(const char *query)
 {
-    printf("Executing query: %s\n", query);
+    #ifdef GLOBAL_DEBUG
+        printf("Executing query: %s\n", query);
+    #endif
+    
     if (_db == NULL || mysql_query(_db, query)) {
-        printf("Error: %s\n", mysql_error(_db));
+        printf("Error occured while executing the query:\n%s\n", mysql_error(_db));
         return 0;
     }
 
@@ -87,6 +93,8 @@ void close_db_connection()
     if (_db != NULL) {
         mysql_close(_db);
         _db = NULL;
-        printf("Database connection closed.\n");
+        #ifdef GLOBAL_DEBUG
+            printf("Database connection closed.\n");
+        #endif
     }
 }

@@ -55,6 +55,11 @@ void process_command(char **parsed_data, int arg_c)
             q(parsed_data, arg_c);
         else
             printf("Not enough arguments provided for command: q");
+    } else if (!strcmp(parsed_data[0], "guildconfig") || !strcmp(parsed_data[0], "gcfg")) {
+        if (arg_c >= 6)
+            guildconfig(parsed_data);
+        else
+            printf("Not enough arguments provided for command: q");
     } else if (!strcmp(parsed_data[0], "help") || !strcmp(parsed_data[0], "h")) {
         print_help();
     } else {
@@ -83,7 +88,7 @@ void show(const char *s)
         show_table("Zadatak");
     else if (!strcmp(s, "log") || !strcmp(s, "l"))
         show_table("Log");
-    else if (!strcmp(s, "cfg") || !strcmp(s, "c"))
+    else if (!strcmp(s, "gcfg") || !strcmp(s, "c"))
         show_table("Konfiguracija_Servera");
     else
         printf("Unknown table.");
@@ -239,6 +244,33 @@ void nickname(char **parsed_data)
     sprintf(query, "UPDATE Korisnik SET prilagodjeno_ime = %s WHERE korisnik_uid = %llu", parsed_data[2], uid);
     if (execute_query(query))
         printf("Changed nickname for uid `%llu` to `%s`", uid, parsed_data[2]);
+}
+
+
+void guildconfig(char **parsed_data)
+{
+    unsigned long long gid = parse_id(parsed_data[1]);
+    unsigned long long wcid = parse_id(parsed_data[2]);
+    unsigned long long lcid = parse_id(parsed_data[3]);
+    int antispam = (int)parse_id(parsed_data[4]);
+    int antiflood= (int)parse_id(parsed_data[5]);
+    if (gid == 0) {
+        invalid_argument("gid");
+        return;
+    }
+    if (antispam != 0 && antispam != 1) {
+        invalid_argument("antispam");
+        return;
+    }
+    if (antiflood != 0 && antiflood != 1) {
+        invalid_argument("antiflood");
+        return;
+    }
+
+    char query[512];
+    sprintf(query, "UPDATE Konfiguracija_Servera SET welcome_cid = %llu, leave_cid = %llu, antispam_aktivan = %d, antiflood_aktivan = %d WHERE guild_gid = %llu", wcid, lcid, antispam, antiflood, gid);
+    if (execute_query(query))
+        printf("Updated config for gid `%llu` (wcid: %llu, lcid: %llu, antispam: %d, antiflood: %d)", gid, wcid, lcid, antispam, antiflood);
 }
 
 
