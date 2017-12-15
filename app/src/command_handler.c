@@ -154,7 +154,7 @@ void updmember(char **parsed_data)
 {
     unsigned long long uid = parse_id(parsed_data[1]);
     unsigned long long gid = parse_id(parsed_data[2]);
-    unsigned char perms = (char)parse_id(parsed_data[2]);
+    unsigned perms = (char)parse_id(parsed_data[3]);
     if (uid == 0) {
         invalid_argument("uid");
         return;
@@ -171,7 +171,7 @@ void updmember(char **parsed_data)
     char query[512];
     sprintf(query, "UPDATE Clan_Guilda SET prilagodjene_permisije = %d WHERE korisnik_uid = %llu AND guild_gid = %llu", perms, uid, gid);
     if (execute_query(query))
-        printf("Set permission bytes for uid %llu in guild %llu to %#04x\n", uid, gid, perms);
+        printf("Set permission bytes for uid %llu in guild %llu to %u (%#04x)\n", uid, gid, perms, perms);
 }
 
 
