@@ -68,9 +68,11 @@ void print_help()
         " - unban <uid> <gid>\n"
         "\tUklanja uid ban za guild sa datim gid-om.\n"
         " - nickname <uid> <name>\n"
-        "\tDodaje novo prilagodjeno ime korisniku\n"
+        "\tDodaje novo prilagodjeno ime korisniku.\n"
         " - guildconfig <gid> <wcid> <lcid> <antispam> <antiflood>\n"
-        "\tMenja guild konfiguraciju (wcid - welcome kanal id, lcid - leave kanal id, antispam i antiflood su boolean vrednosti)\n"
+        "\tMenja guild konfiguraciju (wcid - welcome kanal id, lcid - leave kanal id, antispam i antiflood su boolean vrednosti).\n"
+        " - query <SQL upit>\n"
+        "\tIzvrsava dati SQL upit.\n"
     );
 }
 
