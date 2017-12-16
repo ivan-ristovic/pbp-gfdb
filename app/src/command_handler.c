@@ -163,7 +163,7 @@ void updmember(char **parsed_data)
         invalid_argument("gid");
         return;
     }
-    if (perms == 0) {
+    if (perms > 127) {
         invalid_argument("perms");
         return;
     }
