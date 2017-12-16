@@ -53,7 +53,7 @@ void print_help()
 {
     printf(
         " Komande:\n"
-        " - show users/guilds/channel/bans/log/guildmem/channelmem/emoji/tasks/gcfg\n"
+        " - show users/guilds/channels/bans/log/guildmem/channelmem/emoji/tasks/gcfg\n"
         "\tPrikazuje odgovarajucu tabelu.\n"
         " - delguild <gid>\n"
         "\tBrisanje servera iz baze, kao i svih njegovih kanala, filtera, emotikona itd.\n"

@@ -91,7 +91,7 @@ void show(const char *s)
     else if (!strcmp(s, "gcfg") || !strcmp(s, "c"))
         show_table("Konfiguracija_Servera");
     else
-        printf("?");
+        printf("?\n");
 }
 
 
@@ -198,17 +198,17 @@ void ban(char **parsed_data, int argc)
     if (argc < 4)
         sprintf(query, "INSERT INTO Ban VALUES (%llu, %llu, %llu, DEFAULT, DEFAULT)", uid, gid, auid);
     else if (argc < 5)
-        sprintf(query, "INSERT INTO Ban VALUES (%llu, %llu, %llu, %s, DEFAULT)", uid, gid, auid, parsed_data[3]);
+        sprintf(query, "INSERT INTO Ban VALUES (%llu, %llu, %llu, '%s', DEFAULT)", uid, gid, auid, parsed_data[4]);
     else {
-        for (int i = 4; i < argc; i++) {
+        for (int i = 5; i < argc; i++) {
             strcat(comment, parsed_data[i]);
             strcat(comment, " ");
         }
-        sprintf(query, "INSERT INTO Ban VALUES (%llu, %llu, %llu, %s, %s)", uid, gid, auid, parsed_data[3], parsed_data[4]);
+        sprintf(query, "INSERT INTO Ban VALUES (%llu, %llu, %llu, '%s', '%s')", uid, gid, auid, parsed_data[4], parsed_data[5]);
     }
 
     if (execute_query(query))
-        printf("Banovan uid %llu iz guilda %llu (vreme uklanjanja bana: %s) od strane %llu (razlog: %s)\n", uid, gid, (argc < 4 ? "permanent ban" : parsed_data[3]), auid, (argc < 5 ? "nema" : comment));
+        printf("Banovan uid %llu iz guilda %llu (vreme uklanjanja bana: %s) od strane %llu (razlog: %s)\n", uid, gid, (argc < 5 ? "permanent ban" : parsed_data[4]), auid, (argc < 6 ? "nema" : comment));
 }
 
 
