@@ -62,7 +62,7 @@ void print_help()
         " - addchannelmember <uid> <cid>\n"
         "\tDodaje korisnika u tabelu Clan_Kanala.\n"
         " - updmember <uid> <gid> <perms>\n"
-        "\tUpdatuje permisije korisnika\n"
+        "\tUpdatuje permisije korisnika u guildu (perms mora biti u opsegu [0-127]).\n"
         " - ban <uid> <gid> <autor_gid> [timestamp] [reason]\n"
         "\tDodaje ban za dati uid i vreme trajanja.\n"
         " - unban <uid> <gid>\n"
