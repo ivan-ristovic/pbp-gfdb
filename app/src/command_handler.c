@@ -14,56 +14,56 @@ void process_command(char **parsed_data, int arg_c)
         if (arg_c >= 2)
             show(parsed_data[1]);
         else
-            printf("Show what?");
+            printf("Sta da prikazem?");
     } else if (!strcmp(parsed_data[0], "delguild") || !strcmp(parsed_data[0], "dg")) {
         if (arg_c >= 2)
             delguild(parsed_data);
         else
-            printf("Not enough arguments provided for command: delguild\n");
+            printf("Nedovoljno argumenata prosledjeno za komandu: delguild\n");
     } else if (!strcmp(parsed_data[0], "addguildmember") || !strcmp(parsed_data[0], "+gm")) {
         if (arg_c >= 3)
             addguildmember(parsed_data);
         else
-            printf("Not enough arguments provided for command: addguildmember\n");
+            printf("Nedovoljno argumenata prosledjeno za komandu: addguildmember\n");
     } else if (!strcmp(parsed_data[0], "addchannelmember") || !strcmp(parsed_data[0], "+cm")) {
         if (arg_c >= 3)
             addchannelmember(parsed_data);
         else
-            printf("Not enough arguments provided for command: addchannelmember\n");
+            printf("Nedovoljno argumenata prosledjeno za komandu: addchannelmember\n");
     } else if (!strcmp(parsed_data[0], "updmember") || !strcmp(parsed_data[0], "um")) {
         if (arg_c >= 4)
             updmember(parsed_data);
         else
-            printf("Not enough arguments provided for command: updmember\n");
+            printf("Nedovoljno argumenata prosledjeno za komandu: updmember\n");
     } else if (!strcmp(parsed_data[0], "ban") || !strcmp(parsed_data[0], "b")) {
         if (arg_c >= 4)
             ban(parsed_data, arg_c - 1);
         else
-            printf("Not enough arguments provided for command: ban\n");
+            printf("Nedovoljno argumenata prosledjeno za komandu: ban\n");
     } else if (!strcmp(parsed_data[0], "unban") || !strcmp(parsed_data[0], "ub")) {
         if (arg_c >= 2)
             unban(parsed_data);
         else
-            printf("Not enough arguments provided for command: unban\n");
+            printf("Nedovoljno argumenata prosledjeno za komandu: unban\n");
     } else if (!strcmp(parsed_data[0], "nickname") || !strcmp(parsed_data[0], "nick")) {
         if (arg_c >= 3)
             nickname(parsed_data);
         else
-            printf("Not enough arguments provided for command: nickname\n");
+            printf("Nedovoljno argumenata prosledjeno za komandu: nickname\n");
     } else if (!strcmp(parsed_data[0], "query") || !strcmp(parsed_data[0], "q")) {
         if (arg_c >= 2)
             q(parsed_data, arg_c);
         else
-            printf("Not enough arguments provided for command: query\n");
+            printf("Nedovoljno argumenata prosledjeno za komandu: query\n");
     } else if (!strcmp(parsed_data[0], "guildconfig") || !strcmp(parsed_data[0], "gcfg")) {
         if (arg_c >= 6)
             guildconfig(parsed_data);
         else
-            printf("Not enough arguments provided for command: guildconfig\n");
+            printf("Nedovoljno argumenata prosledjeno za komandu: guildconfig\n");
     } else if (!strcmp(parsed_data[0], "help") || !strcmp(parsed_data[0], "h")) {
         print_help();
     } else {
-        printf("Unknown command: %s\n", parsed_data[0]);
+        printf("Nepoznata komanda: %s\n", parsed_data[0]);
     }
 }
 
@@ -91,7 +91,7 @@ void show(const char *s)
     else if (!strcmp(s, "gcfg") || !strcmp(s, "c"))
         show_table("Konfiguracija_Servera");
     else
-        printf("Unknown table.");
+        printf("?");
 }
 
 
@@ -106,7 +106,7 @@ void delguild(char **parsed_data)
     char query[512];
     sprintf(query, "DELETE FROM Guild WHERE gid = %llu;", gid);
     if (execute_query(query))
-        printf("Deleted guild %llu\n", gid);
+        printf("Obrisan guild %llu\n", gid);
 }
 
 
@@ -126,7 +126,7 @@ void addguildmember(char **parsed_data)
     char query[512];
     sprintf(query, "INSERT INTO Clan_Guilda VALUES (%llu, %llu, DEFAULT, DEFAULT)", uid, gid);
     if (execute_query(query))
-        printf("Added uid %llu as member of guild %llu\n", uid, gid);
+        printf("Dodat uid %llu kao clan guilda %llu\n", uid, gid);
 }
 
 
@@ -146,7 +146,7 @@ void addchannelmember(char **parsed_data)
     char query[512];
     sprintf(query, "INSERT INTO Clan_Kanala VALUES (%llu, (SELECT guild_gid FROM Kanal WHERE cid = %llu), %llu, DEFAULT)", uid, cid, cid);
     if (execute_query(query))
-        printf("Added uid %llu as member of channel %llu\n", uid, cid);
+        printf("Dodat uid %llu kao clan kanala %llu\n", uid, cid);
 }
 
 
@@ -171,7 +171,7 @@ void updmember(char **parsed_data)
     char query[512];
     sprintf(query, "UPDATE Clan_Guilda SET prilagodjene_permisije = %d WHERE korisnik_uid = %llu AND guild_gid = %llu", perms, uid, gid);
     if (execute_query(query))
-        printf("Set permission bytes for uid %llu in guild %llu to %u (%#04x)\n", uid, gid, perms, perms);
+        printf("Postavljene permisije za uid %llu u guildu %llu na %u (%#04x)\n", uid, gid, perms, perms);
 }
 
 
@@ -208,7 +208,7 @@ void ban(char **parsed_data, int argc)
     }
 
     if (execute_query(query))
-        printf("Banned uid %llu from guild %llu until %s by %llu (reason: %s)\n", uid, gid, (argc < 4 ? "indefinite" : parsed_data[3]), auid, (argc < 5 ? "none provided" : comment));
+        printf("Banovan uid %llu iz guilda %llu (vreme uklanjanja bana: %s) od strane %llu (razlog: %s)\n", uid, gid, (argc < 4 ? "permanent ban" : parsed_data[3]), auid, (argc < 5 ? "nema" : comment));
 }
 
 
@@ -228,7 +228,7 @@ void unban(char **parsed_data)
     char query[512];
     sprintf(query, "DELETE FROM Ban WHERE banovani_uid = %llu AND guild_gid = %llu", uid, gid);
     if (execute_query(query))
-        printf("Unbanned uid %llu from guild %llu\n", uid, gid);
+        printf("Unbanovan uid %llu iz guilda %llu\n", uid, gid);
 }
 
 
@@ -243,7 +243,7 @@ void nickname(char **parsed_data)
     char query[512];
     sprintf(query, "UPDATE Korisnik SET prilagodjeno_ime = '%s' WHERE uid = %llu", parsed_data[2], uid);
     if (execute_query(query))
-        printf("Changed nickname for uid %llu to %s\n", uid, parsed_data[2]);
+        printf("Postavljeno ime za uid %llu na %s\n", uid, parsed_data[2]);
 }
 
 
@@ -270,7 +270,7 @@ void guildconfig(char **parsed_data)
     char query[512];
     sprintf(query, "UPDATE Konfiguracija_Servera SET welcome_cid = %llu, leave_cid = %llu, antispam_aktivan = %d, antiflood_aktivan = %d WHERE guild_gid = %llu", wcid, lcid, antispam, antiflood, gid);
     if (execute_query(query))
-        printf("Updated config for gid `%llu` (wcid: %llu, lcid: %llu, antispam: %d, antiflood: %d)", gid, wcid, lcid, antispam, antiflood);
+        printf("Izmenjena konfiguracija za gid `%llu` (wcid: %llu, lcid: %llu, antispam: %d, antiflood: %d)", gid, wcid, lcid, antispam, antiflood);
 }
 
 
@@ -283,5 +283,5 @@ void q(char **parsed_data, int arg_c)
     }
 
     if (!execute_query(query))
-        printf("Invalid query.");
+        printf("Query nije validan.");
 }

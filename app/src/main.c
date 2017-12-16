@@ -5,12 +5,13 @@
 #include "database.h"
 #include "helpers.h"
 
-#define GLOBAL_DEBUG
 
-
-int main()
+int main(int argc, char** argv)
 {
-    connect_to_db("localhost", "root", "enigma", "pbp_gfdb");
+    if (argc != 4)
+        error("Usage: ./program <host> <korisnik> <lozinka>");
+
+    connect_to_db(argv[1], argv[2], argv[3], "pbp_gfdb");
 
     print_help();
 

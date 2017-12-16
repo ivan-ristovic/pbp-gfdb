@@ -84,13 +84,13 @@ void error(const char * msg)
 
 void invalid_argument(const char *msg)
 {
-    printf("Invalid argument provided: `%s`", msg);
+    printf("Argument nije moguce konvertovati u validnu vrednost: `%s`", msg);
 }
 
 
 void clean_up_and_exit(int excode)
 {
     close_db_connection();
-    printf("Exiting...\n");
+    printf("Izlaz...\n");
     exit(excode);
 }

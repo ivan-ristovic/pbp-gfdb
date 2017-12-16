@@ -17,7 +17,7 @@ void connect_to_db(const char *host, const char *user, const char *pass, const c
         error(mysql_error(_db));
 
     #ifdef GLOBAL_DEBUG
-        printf("Database connection established.\n");
+        printf("Izvrsena konekcija na bazu.\n");
     #endif
 }
 
@@ -25,11 +25,11 @@ void connect_to_db(const char *host, const char *user, const char *pass, const c
 int execute_query(const char *query)
 {
     #ifdef GLOBAL_DEBUG
-        printf("Executing query: %s\n", query);
+        printf("Izvrsavam query: %s\n", query);
     #endif
 
     if (_db == NULL || mysql_query(_db, query)) {
-        printf("Error occured while executing the query:\n%s\n", mysql_error(_db));
+        printf("Greska prilikom izvrsavanja:\n%s\n", mysql_error(_db));
         return 0;
     }
 
@@ -94,7 +94,7 @@ void close_db_connection()
         mysql_close(_db);
         _db = NULL;
         #ifdef GLOBAL_DEBUG
-            printf("Database connection closed.\n");
+            printf("Zatvorena konekcija sa bazom.\n");
         #endif
     }
 }

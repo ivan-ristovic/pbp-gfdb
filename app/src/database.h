@@ -3,6 +3,8 @@
 
 #include <mysql.h>
 
+#define GLOBAL_DEBUG
+
 MYSQL *_db;
 
 void connect_to_db( const char *host, const char *user, const char *pass, const char *db);
